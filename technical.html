@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF--8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Design | QIMS Project</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Reusable Header -->
+    <header>
+        <div class="container">
+            <h2 class="logo">QIMS Project</h2>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="solution.html">The Solution</a></li>
+                    <li><a href="features.html">Features</a></li>
+                    <li><a href="technical.html">Technical Design</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main content for the Technical Design page -->
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Technical Design & Architecture</h1>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <div class="container">
+                <!-- Section 1: System Architecture -->
+                <h2>System Architecture</h2>
+                <p>QIMS is designed using a modern three-tier architecture to ensure scalability, security, and separation of concerns. This model consists of a presentation layer, an application layer, and a data layer.</p>
+                
+                <!-- Section 2: Data Flow Diagrams (DFDs) -->
+                <h2 class="section-break">Data Flow Diagrams</h2>
+                <p>The DFDs below illustrate how data moves through the system, from a high-level context view to a more detailed breakdown of the primary processes.</p>
+                <div class="diagram-container">
+                    <div class="diagram">
+                        <h3>Context-Level DFD</h3>
+                        <img src="images/dfd-context.png" alt="Context-Level Data Flow Diagram">
+                    </div>
+                    <div class="diagram">
+                        <h3>Level-0 DFD</h3>
+                        <img src="images/dfd-level0.png" alt="Level-0 Data Flow Diagram">
+                    </div>
+                </div>
+
+                <!-- Section 3: Entity-Relationship Diagram (ERD) -->
+                <h2 class="section-break">Database Schema (ERD)</h2>
+                <p>The Entity-Relationship Diagram outlines the database structure, showing the core entities (like Products, Suppliers, and Sales) and the relationships between them.</p>
+                <div class="diagram-full">
+                    <h3>Entity-Relationship Diagram</h3>
+                    <img src="images/erd.png" alt="Entity-Relationship Diagram">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Reusable Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 [SWIFTY/Group 7]. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
