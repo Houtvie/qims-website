@@ -113,7 +113,9 @@ imgProfile.addEventListener('click', function () {
 // MENU
 const allMenu = document.querySelectorAll('main .content-data .head .menu');
 
-allMenu.forEach(item=> {
+const allCardMenu = document.querySelectorAll('main .card-data .head .menu');
+
+allCardMenu.forEach(item=> {
 	const icon = item.querySelector('.icon');
 	const menuLink = item.querySelector('.menu-link');
 
@@ -122,6 +124,14 @@ allMenu.forEach(item=> {
 	})
 })
 
+allMenu.forEach(item=> {
+	const icon = item.querySelector('.icon');
+	const menuLink = item.querySelector('.menu-link');
+
+	icon.addEventListener('click', function () {
+		menuLink.classList.toggle('show');
+	})
+})
 
 
 window.addEventListener('click', function (e) {
@@ -134,6 +144,19 @@ window.addEventListener('click', function (e) {
 	}
 
 	allMenu.forEach(item=> {
+		const icon = item.querySelector('.icon');
+		const menuLink = item.querySelector('.menu-link');
+
+		if(e.target !== icon) {
+			if(e.target !== menuLink) {
+				if (menuLink.classList.contains('show')) {
+					menuLink.classList.remove('show')
+				}
+			}
+		}
+	})
+
+	allCardMenu.forEach(item=> {
 		const icon = item.querySelector('.icon');
 		const menuLink = item.querySelector('.menu-link');
 
@@ -195,3 +218,4 @@ tooltip: {
 
 var chart = new ApexCharts(document.querySelector("#chart"), options);
 chart.render();
+

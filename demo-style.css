@@ -14,13 +14,13 @@
 	--dark: #000;
 	--green: #81D43A;
 	--light-green: #E3FFCB;
-	--blue: #1775F1;
+	--blue: #007BFF;
 	--light-blue: #D0E4FF;
-	--dark-blue: #0C5FCD;
+	--dark-blue: #0056b3;
 	--red: #FC3B56;
   --light-red: #FFE1E6;
-    --primary-blue: #007BFF;
-    --my-dark-blue: #0056b3;
+    --primary-blue: ;
+    --my-dark-blue: ;
 
 }
 
@@ -35,6 +35,75 @@ body {
 
 a {
 	text-decoration: none;
+}
+
+.card-data{
+    .label{
+        margin-left: 6px;
+        span{
+            margin-left: 2px;
+            font-weight: 400;
+        }
+    }
+
+    .icon-bg{
+        padding: 8px;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        i{
+            font-size: 1.5rem;
+        }
+    }
+
+    .icon-bg-up{
+        background-color: var(--light-green);
+    }
+
+    .icon-bg-down{
+        background-color: var(--light-red);
+    }
+
+    .body{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .card-trending-sign{
+            .bx-trending-up{
+                font-size: 3rem;
+                font-weight: 100;
+                color: var(--green);
+            }
+
+            .bx-trending-down{
+                font-size: 3rem;
+                font-weight: 100;
+                color: var(--red);
+            }
+        }
+    }
+
+    .content{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+
+        div{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            p{
+                font-size: x-small;
+            }
+        }
+
+        
+    }
 }
 
 li {
@@ -361,7 +430,7 @@ main .info-data {
 	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 	grid-gap: 20px;
 }
-main .info-data .card {
+main .info-data .card, .card-data {
 	padding: 20px;
 	border-radius: 10px;
 	background: var(--light);
@@ -406,7 +475,7 @@ main .card .progress::before {
 	background: var(--blue);
 	width: var(--value);
 }
-main .card .label {
+main .card .label, .card-data .label {
 	font-size: 14px;
 	font-weight: 700;
 }
@@ -416,7 +485,7 @@ main .data {
 	margin-top: 20px;
 	flex-wrap: wrap;
 }
-main .data .content-data {
+main .data .content-data , .card-data{
 	flex-grow: 1;
 	flex-basis: 400px;
 	padding: 20px;
@@ -424,26 +493,26 @@ main .data .content-data {
 	border-radius: 10px;
 	box-shadow: 4px 4px 16px rgba(0, 0, 0, .1);
 }
-main .content-data .head {
+main .content-data .head , .card-data .head{
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: 24px;
 }
-main .content-data .head h3 {
+main .content-data .head h3, .card-data .head h3{
 	font-size: 20px;
 	font-weight: 600;
 }
-main .content-data .head .menu {
+main .content-data .head .menu, .card-data .head .menu {
 	position: relative;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-main .content-data .head .menu .icon {
+main .content-data .head .menu .icon, .card-data .head .menu .icon {
 	cursor: pointer;
 }
-main .content-data .head .menu-link {
+main .content-data .head .menu-link, .card-data .head .menu-link{
 	position: absolute;
 	top: calc(100% + 10px);
 	right: 0;
@@ -457,19 +526,19 @@ main .content-data .head .menu-link {
 	pointer-events: none;
 	transition: all .3s ease;
 }
-main .content-data .head .menu-link.show {
+main .content-data .head .menu-link.show, .card-data .head .menu-link.show {
 	top: 100%;
 	opacity: 1;
 	pointer-events: visible;
 }
-main .content-data .head .menu-link a {
+main .content-data .head .menu-link a , .card-data .head .menu-link a {
 	display: block;
 	padding: 6px 16px;
 	font-size: 14px;
 	color: var(--dark);
 	transition: all .3s ease;
 }
-main .content-data .head .menu-link a:hover {
+main .content-data .head .menu-link a:hover, .card-data .head .menu-link a:hover {
 	background: var(--grey);
 }
 main .content-data .chart {

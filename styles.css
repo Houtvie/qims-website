@@ -38,7 +38,7 @@ header .container {
 }
 
 .logo {
-    color: #0056b3;
+    color: var(--dark-blue);
 }
 
 nav ul {
@@ -57,7 +57,7 @@ nav a {
 }
 
 nav a:hover {
-    color: #0056b3;
+    color: var(--dark-blue);
 }
 
 
@@ -82,7 +82,7 @@ nav a:hover {
 .cta-button {
     display: inline-block;
     background-color: #fff;
-    color: #007BFF;
+    color: var(--primary-blue);
     padding: 15px 30px;
     text-decoration: none;
     font-weight: bold;
@@ -92,6 +92,18 @@ nav a:hover {
 
 .cta-button:hover {
     background-color: #f0f0f0;
+}
+
+/* Add this to styles.css */
+.cta-button.secondary {
+    background-color: transparent;
+    color: #fff;
+    border: 2px solid #fff;
+}
+
+.cta-button.secondary:hover {
+    background-color: #fff;
+    color: #007BFF;
 }
 
 
@@ -121,7 +133,7 @@ footer {
 .content-section h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #0056b3;
+    color: var(--dark-blue);
 }
 
 .content-section p {
