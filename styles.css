@@ -1,4 +1,10 @@
 /* --- Basic Reset & Global Styles --- */
+
+:root{
+    --primary-blue: #007BFF;
+    --dark-blue: #0056b3;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
