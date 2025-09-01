@@ -397,3 +397,59 @@ footer {
     margin-top: 1.5rem;
     font-weight: 500;
 }
+
+/* styles.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    /* Colors */
+    --color-primary: #0056b3; /* Deep Blue */
+    --color-primary-light: #007BFF; /* Lighter Purple */
+    --color-secondary: #03a9f4; /* Light Blue */
+    --color-accent: #ff4081; /* Pink Accent */
+    --color-dark: #333333; /* Dark Grey */
+    --color-grey-dark: #555555;
+    --color-grey: #aaaaaa;
+    --color-grey-light: #f0f2f5; /* Lighter Grey for background */
+    --color-white: #ffffff;
+    --color-danger: #e74c3c; /* Red for errors */
+    --color-success: #2ecc71; /* Green for success */
+
+    /* Typography */
+    --font-family-base: 'Poppins', sans-serif;
+
+    /* Spacing & Sizing */
+    --padding-sm: 0.8rem;
+    --padding-md: 1.5rem;
+    --padding-lg: 2.5rem;
+    --margin-sm: 1rem;
+    --margin-md: 1.5rem;
+    --margin-lg: 2rem;
+
+    /* Border Radii */
+    --border-radius-sm: 5px;
+    --border-radius-md: 10px;
+    --card-border-radius: 15px; /* More pronounced rounded corners for cards */
+
+    /* Shadows */
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Softer, deeper shadow */
+    --box-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.15); /* Slightly larger on hover */
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-base);
+    line-height: 1.6;
+    color: var(--color-dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Add any other global styles you want here */
