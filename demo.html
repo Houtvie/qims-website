@@ -4,375 +4,1549 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-	<link rel="stylesheet" href="demo-style.css">
-    
-	<title>AdminSite</title>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+
+		* {
+			font-family: 'Open Sans', sans-serif;
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		:root {
+			--grey: #F1F0F6;
+			--dark-grey: #8D8D8D;
+			--light: #fff;
+			--dark: #000;
+			--green: #81D43A;
+			--light-green: #E3FFCB;
+			--blue: #007BFF;
+			--light-blue: #D0E4FF;
+			--dark-blue: #0056b3;
+			--red: #FC3B56;
+			--light-red: #FFE1E6;
+		}
+
+		html {
+			overflow-x: hidden;
+		}
+
+		body {
+			background: var(--grey);
+			overflow-x: hidden;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		li {
+			list-style: none;
+		}
+
+		/* SIDEBAR */
+		#sidebar {
+			position: fixed;
+			max-width: 260px;
+			width: 100%;
+			background: var(--light);
+			top: 0;
+			left: 0;
+			height: 100%;
+			overflow-y: auto;
+			scrollbar-width: none;
+			transition: all .3s ease;
+			z-index: 200;
+		}
+		#sidebar.hide {
+			max-width: 60px;
+		}
+		#sidebar.hide:hover {
+			max-width: 260px;
+		}
+		#sidebar::-webkit-scrollbar {
+			display: none;
+		}
+		#sidebar .brand {
+			font-size: 24px;
+			display: flex;
+			align-items: center;
+			height: 64px;
+			font-weight: 700;
+			color: var(--blue);
+			position: sticky;
+			top: 0;
+			left: 0;
+			z-index: 100;
+			background: var(--light);
+			transition: all .3s ease;
+			padding: 0 6px;
+		}
+		#sidebar .icon {
+			min-width: 48px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-right: 6px;
+		}
+		#sidebar .icon-right {
+			margin-left: auto;
+			transition: all .3s ease;
+		}
+		#sidebar .side-menu {
+			margin: 36px 0;
+			padding: 0 20px;
+			transition: all .3s ease;
+		}
+		#sidebar.hide .side-menu {
+			padding: 0 6px;
+		}
+		#sidebar.hide:hover .side-menu {
+			padding: 0 20px;
+		}
+		#sidebar .side-menu a {
+			display: flex;
+			align-items: center;
+			font-size: 14px;
+			color: var(--dark);
+			padding: 12px 16px 12px 0;
+			transition: all .3s ease;
+			border-radius: 10px;
+			margin: 4px 0;
+			white-space: nowrap;
+		}
+		#sidebar .side-menu > li > a:hover {
+			background: var(--grey);
+		}
+		#sidebar .side-menu > li > a.active .icon-right {
+			transform: rotateZ(90deg);
+		}
+		#sidebar .side-menu > li > a.active,
+		#sidebar .side-menu > li > a.active:hover {
+			background: var(--blue);
+			color: var(--light);
+		}
+		#sidebar .divider {
+			margin-top: 24px;
+			font-size: 12px;
+			text-transform: uppercase;
+			font-weight: 700;
+			color: var(--dark-grey);
+			transition: all .3s ease;
+			white-space: nowrap;
+		}
+		#sidebar.hide:hover .divider {
+			text-align: left;
+		}
+		#sidebar.hide .divider {
+			text-align: center;
+		}
+		#sidebar .side-dropdown {
+			padding-left: 54px;
+			max-height: 0;
+			overflow-y: hidden;
+			transition: all .15s ease;
+		}
+		#sidebar .side-dropdown.show {
+			max-height: 1000px;
+		}
+		#sidebar .side-dropdown a:hover {
+			color: var(--blue);
+		}
+		#sidebar .ads {
+			width: 100%;
+			padding: 20px;
+		}
+		#sidebar.hide .ads {
+			display: none;
+		}
+		#sidebar.hide:hover .ads {
+			display: block;
+		}
+		#sidebar .ads .wrapper {
+			background: var(--grey);
+			padding: 20px;
+			border-radius: 10px;
+		}
+		#sidebar .btn-upgrade {
+			font-size: 14px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 12px 0;
+			color: var(--light);
+			background: var(--blue);
+			transition: all .3s ease;
+			border-radius: 5px;
+			font-weight: 600;
+			margin-bottom: 12px;
+		}
+		#sidebar .btn-upgrade:hover {
+			background: var(--dark-blue);
+		}
+		#sidebar .ads .wrapper p {
+			font-size: 12px;
+			color: var(--dark-grey);
+			text-align: center;
+		}
+		#sidebar .ads .wrapper p span {
+			font-weight: 700;
+		}
+
+		/* CONTENT */
+		#content {
+			position: relative;
+			width: calc(100% - 260px);
+			left: 260px;
+			transition: all .3s ease;
+		}
+		#sidebar.hide + #content {
+			width: calc(100% - 60px);
+			left: 60px;
+		}
+
+		/* NAVBAR */
+		nav {
+			background: var(--light);
+			height: 64px;
+			padding: 0 20px;
+			display: flex;
+			align-items: center;
+			grid-gap: 28px;
+			position: sticky;
+			top: 0;
+			left: 0;
+			z-index: 100;
+		}
+		nav .toggle-sidebar {
+			font-size: 18px;
+			cursor: pointer;
+		}
+		nav form {
+			max-width: 400px;
+			width: 100%;
+			margin-right: auto;
+		}
+		nav .form-group {
+			position: relative;
+		}
+		nav .form-group input {
+			width: 100%;
+			background: var(--grey);
+			border-radius: 5px;
+			border: none;
+			outline: none;
+			padding: 10px 36px 10px 16px;
+			transition: all .3s ease;
+		}
+		nav .form-group input:focus {
+			box-shadow: 0 0 0 1px var(--blue), 0 0 0 4px var(--light-blue);
+		}
+		nav .form-group .icon {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			right: 16px;
+			color: var(--dark-grey);
+		}
+		nav .nav-link {
+			position: relative;
+		}
+		nav .nav-link .icon {
+			font-size: 18px;
+			color: var(--dark);
+		}
+		nav .nav-link .badge {
+			position: absolute;
+			top: -12px;
+			right: -12px;
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			border: 2px solid var(--light);
+			background: var(--red);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			color: var(--light);
+			font-size: 10px;
+			font-weight: 700;
+		}
+		nav .divider {
+			width: 1px;
+			background: var(--grey);
+			height: 12px;
+			display: block;
+		}
+		nav .profile {
+			position: relative;
+		}
+		nav .profile img {
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+			object-fit: cover;
+			cursor: pointer;
+		}
+		nav .profile .profile-link {
+			position: absolute;
+			top: calc(100% + 10px);
+			right: 0;
+			background: var(--light);
+			padding: 10px 0;
+			box-shadow: 4px 4px 16px rgba(0, 0, 0, .1);
+			border-radius: 10px;
+			width: 160px;
+			opacity: 0;
+			pointer-events: none;
+			transition: all .3s ease;
+		}
+		nav .profile .profile-link.show {
+			opacity: 1;
+			pointer-events: visible;
+			top: 100%;
+		}
+		nav .profile .profile-link a {
+			padding: 10px 16px;
+			display: flex;
+			grid-gap: 10px;
+			font-size: 14px;
+			color: var(--dark);
+			align-items: center;
+			transition: all .3s ease;
+		}
+		nav .profile .profile-link a:hover {
+			background: var(--grey);
+		}
+
+		/* MAIN */
+		main {
+			width: 100%;
+			padding: 24px 20px 20px 20px;
+		}
+		main .title {
+			font-size: 28px;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+		main .breadcrumbs {
+			display: flex;
+			grid-gap: 6px;
+		}
+		main .breadcrumbs li,
+		main .breadcrumbs li a {
+			font-size: 14px;
+		}
+		main .breadcrumbs li a {
+			color: var(--blue);
+		}
+		main .breadcrumbs li a.active,
+		main .breadcrumbs li.divider {
+			color: var(--dark-grey);
+			pointer-events: none;
+		}
+		main .info-data {
+			margin-top: 36px;
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+			grid-gap: 20px;
+		}
+		.card-data {
+			padding: 20px;
+			border-radius: 10px;
+			background: var(--light);
+			box-shadow: 4px 4px 16px rgba(0, 0, 0, .05);
+		}
+		.card-data .head {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 24px;
+		}
+		.card-data .head h3 {
+			font-size: 20px;
+			font-weight: 600;
+		}
+		.card-data .head .menu {
+			position: relative;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.card-data .head .menu .icon {
+			cursor: pointer;
+		}
+		.card-data .head .menu-link {
+			position: absolute;
+			top: calc(100% + 10px);
+			right: 0;
+			width: 140px;
+			background: var(--light);
+			border-radius: 10px;
+			box-shadow: 4px 4px 16px rgba(0, 0, 0, .1);
+			padding: 10px 0;
+			z-index: 100;
+			opacity: 0;
+			pointer-events: none;
+			transition: all .3s ease;
+		}
+		.card-data .head .menu-link.show {
+			top: 100%;
+			opacity: 1;
+			pointer-events: visible;
+		}
+		.card-data .head .menu-link a {
+			display: block;
+			padding: 6px 16px;
+			font-size: 14px;
+			color: var(--dark);
+			transition: all .3s ease;
+		}
+		.card-data .head .menu-link a:hover {
+			background: var(--grey);
+		}
+		.card-data .body {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.card-data .content {
+			display: flex;
+			align-items: center;
+			gap: 1rem;
+			margin-bottom: 1rem;
+		}
+		.card-data .content div {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		.card-data .content div p {
+			font-size: x-small;
+		}
+		.card-data .icon-bg {
+			padding: 8px;
+			border-radius: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.card-data .icon-bg i {
+			font-size: 1.5rem;
+		}
+		.card-data .icon-bg-up {
+			background-color: var(--light-green);
+		}
+		.card-data .icon-bg-down {
+			background-color: var(--light-red);
+		}
+		.card-data .label {
+			font-size: 14px;
+			font-weight: 700;
+			margin-left: 6px;
+		}
+		.card-data .label span {
+			margin-left: 2px;
+			font-weight: 400;
+		}
+		.card-data .card-trending-sign .bx-trending-up {
+			font-size: 3rem;
+			font-weight: 100;
+			color: var(--green);
+		}
+		.card-data .card-trending-sign .bx-trending-down {
+			font-size: 3rem;
+			font-weight: 100;
+			color: var(--red);
+		}
+
+		/* Page Content Styles */
+		.page-content {
+			display: none;
+		}
+		.page-content.active {
+			display: block;
+		}
+
+		.data-table {
+			background: var(--light);
+			border-radius: 10px;
+			overflow: hidden;
+			box-shadow: 4px 4px 16px rgba(0, 0, 0, .05);
+			margin-top: 20px;
+		}
+		.table-header {
+			background: var(--blue);
+			color: var(--light);
+			padding: 15px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+		.btn {
+			padding: 8px 16px;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: all .3s ease;
+			font-size: 14px;
+		}
+		.btn-primary {
+			background: var(--blue);
+			color: var(--light);
+		}
+		.btn-primary:hover {
+			background: var(--dark-blue);
+		}
+		.btn-success {
+			background: var(--green);
+			color: var(--light);
+		}
+		.btn-danger {
+			background: var(--red);
+			color: var(--light);
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+		th, td {
+			padding: 12px 20px;
+			text-align: left;
+			border-bottom: 1px solid var(--grey);
+		}
+		th {
+			background: var(--grey);
+			font-weight: 600;
+		}
+		.form-container {
+			background: var(--light);
+			padding: 20px;
+			border-radius: 10px;
+			box-shadow: 4px 4px 16px rgba(0, 0, 0, .05);
+			margin-top: 20px;
+		}
+		.form-row {
+			display: flex;
+			gap: 20px;
+			margin-bottom: 15px;
+		}
+		.form-group {
+			flex: 1;
+		}
+		.form-group label {
+			display: block;
+			margin-bottom: 5px;
+			font-weight: 600;
+			color: var(--dark);
+		}
+		.form-group input, .form-group select {
+			width: 100%;
+			padding: 10px 16px;
+			border: 1px solid var(--grey);
+			border-radius: 5px;
+			outline: none;
+			transition: all .3s ease;
+		}
+		.form-group input:focus, .form-group select:focus {
+			box-shadow: 0 0 0 1px var(--blue), 0 0 0 4px var(--light-blue);
+		}
+		.stock-alert {
+			background: var(--light-red);
+			color: var(--red);
+			padding: 10px;
+			border-radius: 5px;
+			margin: 10px 0;
+		}
+		.low-stock {
+			color: var(--red);
+			font-weight: 600;
+		}
+		.in-stock {
+			color: var(--green);
+			font-weight: 600;
+		}
+
+		@media screen and (max-width: 768px) {
+			#content {
+				position: relative;
+				width: calc(100% - 60px);
+				transition: all .3s ease;
+			}
+			nav .nav-link,
+			nav .divider {
+				display: none;
+			}
+		}
+	</style>
+	<title>QuickStock Inventory Management System</title>
 </head>
 <body>
-	
 	<!-- SIDEBAR -->
 	<section id="sidebar">
-		<h2><a href="index.html" class="brand"><i class='bx bxs-smile icon'></i> QIMS Project</a></h2>
+		<h2><a href="#" class="brand" onclick="showPage('dashboard')"><i class='bx bxs-store icon'></i> QuickStock</a></h2>
 		<ul class="side-menu">
-			<li><a href="#" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
-			<li class="divider" data-text="main">Main</li>
+			<li><a href="#" class="active" onclick="showPage('dashboard')"><i class='bx bxs-dashboard icon'></i> Dashboard</a></li>
+			<li class="divider" data-text="inventory">Inventory Management</li>
 			<li>
-				<a href="#"><i class='bx bxs-inbox icon' ></i> Inventory <i class='bx bx-chevron-right icon-right' ></i></a>
+				<a href="#" onclick="toggleDropdown(this)"><i class='bx bxs-package icon'></i> Products <i class='bx bx-chevron-right icon-right'></i></a>
 				<ul class="side-dropdown">
-					<li><a href="#">Items</a></li>
-					<li><a href="#">Composite Items</a></li>
-					<li><a href="#">Price Lists</a></li>
-					<li><a href="#">Inventory Adjustment</a></li>
+					<li><a href="#" onclick="showPage('products')">All Products</a></li>
+					<li><a href="#" onclick="showPage('add-product')">Add New Product</a></li>
+					<li><a href="#" onclick="showPage('low-stock')">Low Stock Alerts</a></li>
 				</ul>
 			</li>
 			<li>
-                <a href="#"><i class='bx bxs-chart icon' ></i> Sales <i class='bx bx-chevron-right icon-right' ></i></a>
-                <ul class="side-dropdown">
-                    <li><a href="#">Customers</a></li>
-                    <li><a href="#">Retainer Invoices</a></li>
-                    <li><a href="#">Sales Orders</a></li>
-                    <li><a href="#">Packages</a></li>
-                </ul>
-            </li>
-			<li>
-                <a href="#"><i class='bx bxs-widget icon' ></i> Purchases <i class='bx bx-chevron-right icon-right' ></i></a>
-                <ul class="side-dropdown">
-                    <li><a href="#">Vendors</a></li>
-                    <li><a href="#">Purchase Orders</a></li>
-                    <li><a href="#">Purchase Recceives</a></li>
-                    <li><a href="#">Bills</a></li>
-                    <li><a href="#">Payments Made</a></li>
-                </ul>
-            </li>
-			<li class="divider" data-text="table and forms">Table and forms</li>
-			<li><a href="#"><i class='bx bx-table icon' ></i> Tables</a></li>
-			<li>
-				<a href="#"><i class='bx bxs-notepad icon' ></i> Forms <i class='bx bx-chevron-right icon-right' ></i></a>
+				<a href="#" onclick="toggleDropdown(this)"><i class='bx bxs-user-detail icon'></i> Suppliers <i class='bx bx-chevron-right icon-right'></i></a>
 				<ul class="side-dropdown">
-					<li><a href="#">Basic</a></li>
-					<li><a href="#">Select</a></li>
-					<li><a href="#">Checkbox</a></li>
-					<li><a href="#">Radio</a></li>
+					<li><a href="#" onclick="showPage('suppliers')">All Suppliers</a></li>
+					<li><a href="#" onclick="showPage('add-supplier')">Add Supplier</a></li>
 				</ul>
+			</li>
+			<li class="divider" data-text="sales">Sales Management</li>
+			<li>
+				<a href="#" onclick="toggleDropdown(this)"><i class='bx bxs-cart icon'></i> Sales <i class='bx bx-chevron-right icon-right'></i></a>
+				<ul class="side-dropdown">
+					<li><a href="#" onclick="showPage('sales-orders')">Sales Orders</a></li>
+					<li><a href="#" onclick="showPage('customers')">Customers</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#" onclick="showPage('reports')"><i class='bx bxs-report icon'></i> Reports</a>
 			</li>
 		</ul>
 		<div class="ads">
 			<div class="wrapper">
-				<a href="#" class="btn-upgrade">Upgrade</a>
-				<p>Become a <span>PRO</span> member and enjoy <span>All Features</span></p>
+				<a href="#" class="btn-upgrade">Upgrade to Pro</a>
+				<p>Get advanced <span>analytics</span> and <span>reporting</span> features</p>
 			</div>
 		</div>
 	</section>
-	<!-- SIDEBAR -->
 
-	<!-- NAVBAR -->
+	<!-- CONTENT -->
 	<section id="content">
 		<!-- NAVBAR -->
 		<nav>
-			<i class='bx bx-menu toggle-sidebar' ></i>
-			<form action="#">
+			<i class='bx bx-menu toggle-sidebar' onclick="toggleSidebar()"></i>
+			<form action="#" onsubmit="searchProducts(event)">
 				<div class="form-group">
-					<input type="text" placeholder="Search...">
-					<i class='bx bx-search icon' ></i>
+					<input type="text" id="searchInput" placeholder="Search products...">
+					<i class='bx bx-search icon'></i>
 				</div>
 			</form>
 			<a href="#" class="nav-link">
-				<i class='bx bxs-bell icon' ></i>
-				<span class="badge">5</span>
-			</a>
-			<a href="#" class="nav-link">
-				<i class='bx bxs-message-square-dots icon' ></i>
-				<span class="badge">8</span>
+				<i class='bx bxs-bell icon'></i>
+				<span class="badge" id="alertCount">3</span>
 			</a>
 			<span class="divider"></span>
 			<div class="profile">
 				<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
 				<ul class="profile-link">
-					<li><a href="#"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
-					<li><a href="#"><i class='bx bxs-cog' ></i> Settings</a></li>
-					<li><a href="index.html"><i class='bx bxs-log-out-circle' ></i> Logout</a></li>
+					<li><a href="#"><i class='bx bxs-user-circle icon'></i> Profile</a></li>
+					<li><a href="#"><i class='bx bxs-cog'></i> Settings</a></li>
+					<li><a href="#"><i class='bx bxs-log-out-circle'></i> Logout</a></li>
 				</ul>
 			</div>
 		</nav>
-		<!-- NAVBAR -->
 
-		<!-- MAIN -->
+		<!-- MAIN CONTENT -->
 		<main>
-			<h1 class="title">Dashboard</h1>
-			<ul class="breadcrumbs">
-				<li><a href="demo.html">Home</a></li>
-				<li class="divider">/</li>
-				<li><a href="demo.html" class="active">Dashboard</a></li>
-			</ul>
-			<div class="info-data">
-				<!--div class="card">
-					<div class="head">
-						<div>
-							<h2>1500</h2>
-							<p>Traffic</p>
+			<!-- DASHBOARD PAGE -->
+			<div id="dashboard" class="page-content active">
+				<h1 class="title">Dashboard</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#" onclick="showPage('dashboard')">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Dashboard</a></li>
+				</ul>
+				
+				<div class="info-data">
+					<div class="card-data">
+						<div class="head">
+							<h3>Total Products</h3>
 						</div>
-						<i class='bx bx-trending-up icon' ></i>
-					</div>
-					<span class="progress" data-value="40%"></span>
-					<span class="label">40%</span>
-				</div>
-				<div class="card">
-					<div class="head">
-						<div>
-							<h2>234</h2>
-							<p>Sales</p>
+						<div class="body">
+							<div>
+								<div class="content">
+									<div class="icon-bg icon-bg-up">
+										<i class='bx bx-package'></i>
+									</div>
+									<div>
+										<h2 id="totalProducts">156</h2>
+										<p>In Inventory</p>
+									</div>
+								</div>
+								<div>
+									<span class="label">
+										<span id="productsChange">+12</span><span> this week</span>
+									</span>
+								</div>
+							</div>
+							<div class="card-trending-sign">
+								<i class='bx bx-trending-up bx-breathe'></i>
+							</div>
 						</div>
-						<i class='bx bx-trending-down icon down' ></i>
 					</div>
-					<span class="progress" data-value="60%"></span>
-					<span class="label">60%</span>
-				</div>
-				<div class="card">
-					<div class="head">
-						<div>
-							<h2>465</h2>
-							<p>Pageviews</p>
-						</div>
-						<i class='bx bx-trending-up icon' ></i>
-					</div>
-					<span class="progress" data-value="30%"></span>
-					<span class="label">30%</span>
-				</div>
-				<div class="card">
-					<div class="head">
-						<div>
-							<h2>235</h2>
-							<p>Visitors</p>
-						</div>
-						<i class='bx bx-trending-up icon' ></i>
-					</div>
-					<span class="progress" data-value="80%"></span>
-					<span class="label">80%</span>
-				</div-->
-                <div class="card-data">
-                    <div class="head">
-                        <h3>Sales</h3>
-                        <div class="menu">
-                            <i class='bx bx-dots-horizontal-rounded icon'></i>
-                            <ul class="menu-link">
-                                <li><a href="#">Edit</a></li>
-                                <li><a href="#">Save</a></li>
-                                <li><a href="#">Remove</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="body">
-                        <div>
-                            <div class="content">
-                                <div class="icon-bg icon-bg-up">
-                                    <i class='bx  bx-cart'  ></i> 
-                                </div>
-                                <div>
-                                    <h2>234</h2>
-                                    <p>Today</p>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="label">
-                                    8%<span>   increase</span>
-                            </div>
-                        </div>
-                        <div class="card-trending-sign">
-                            <i class='bx  bx-trending-up bx-breathe'  ></i> 
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card-data">
-                    <div class="head">
-                        <h3>Customers</h3>
-                        <div class="menu">
-                            <i class='bx bx-dots-horizontal-rounded icon'></i>
-                            <ul class="menu-link">
-                                <li><a href="#">Edit</a></li>
-                                <li><a href="#">Save</a></li>
-                                <li><a href="#">Remove</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="body">
-                        <div>
-                            <div class="content">
-                                <div class="icon-bg icon-bg-up">
-                                    <i class='bx  bx-group'  ></i> 
-                                </div>
-                                <div>
-                                    <h2>1465</h2>
-                                    <p>This Year</p>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="label">
-                                    4%<span>   increase</span>
-                            </div>
-                        </div>
-                        <div class="card-trending-sign">
-                            <i class='bx  bx-trending-up bx-breathe'  ></i> 
-                            
-                        </div>
-                    </div>
-                </div>
+					<div class="card-data">
+						<div class="head">
+							<h3>Low Stock Items</h3>
+						</div>
+						<div class="body">
+							<div>
+								<div class="content">
+									<div class="icon-bg icon-bg-down">
+										<i class='bx bx-error-alt'></i>
+									</div>
+									<div>
+										<h2 id="lowStockCount">8</h2>
+										<p>Need Reorder</p>
+									</div>
+								</div>
+								<div>
+									<span class="label">
+										<span class="low-stock">Critical</span>
+									</span>
+								</div>
+							</div>
+							<div class="card-trending-sign">
+								<i class='bx bx-trending-down'></i>
+							</div>
+						</div>
+					</div>
 
-                <div class="card-data">
-                    <div class="head">
-                        <h3>Revenue</h3>
-                        <div class="menu">
-                            <i class='bx bx-dots-horizontal-rounded icon'></i>
-                            <ul class="menu-link">
-                                <li><a href="#">Edit</a></li>
-                                <li><a href="#">Save</a></li>
-                                <li><a href="#">Remove</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="body">
-                        <div>
-                            <div class="content">
-                                <div class="icon-bg icon-bg-down">
-                                    <i class='bx  bx-pound'  ></i>  
-                                </div>
-                                <div>
-                                    <h2>
-                                        <span style="font-weight: 400;
-                                        font-size: 1.1rem;">£</span>
-                                        2350
-                                    </h2>
-                                    <p>This Month</p>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="label">
-                                    12%<span>   decrease</span>
-                            </div>
-                        </div>
-                        <div class="card-trending-sign">
-                            <i class='bx  bx-trending-down'  ></i> 
-                            
-                        </div>
-                    </div>
-                </div>
+					<div class="card-data">
+						<div class="head">
+							<h3>Total Sales</h3>
+						</div>
+						<div class="body">
+							<div>
+								<div class="content">
+									<div class="icon-bg icon-bg-up">
+										<i class='bx bx-cart'></i>
+									</div>
+									<div>
+										<h2>£<span id="totalSales">12,450</span></h2>
+										<p>This Month</p>
+									</div>
+								</div>
+								<div>
+									<span class="label">
+										+8%<span> increase</span>
+									</span>
+								</div>
+							</div>
+							<div class="card-trending-sign">
+								<i class='bx bx-trending-up bx-breathe'></i>
+							</div>
+						</div>
+					</div>
 
-                <div class="card-data">
-                    <div class="head">
-                        <h3>Products</h3>
-                        <div class="menu">
-                            <i class='bx bx-dots-horizontal-rounded icon'></i>
-                            <ul class="menu-link">
-                                <li><a href="#">Edit</a></li>
-                                <li><a href="#">Save</a></li>
-                                <li><a href="#">Remove</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="body">
-                        <div>
-                            <div class="content">
-                                <div class="icon-bg icon-bg-up">
-                                   <i class='bx  bx-package'  ></i> 
-                                </div>
-                                <div>
-                                    <h2>624</h2>
-                                    <p>This Week</p>
-                                </div>
-                            </div>
-                            <div>
-                                <span class="label">
-                                    7%<span>   increase</span>
-                            </div>
-                        </div>
-                        <div class="card-trending-sign">
-                            <i class='bx  bx-trending-up bx-breathe'  ></i> 
-                            
-                        </div>
-                    </div>
-                </div>
-                
+					<div class="card-data">
+						<div class="head">
+							<h3>Active Suppliers</h3>
+						</div>
+						<div class="body">
+							<div>
+								<div class="content">
+									<div class="icon-bg icon-bg-up">
+										<i class='bx bx-group'></i>
+									</div>
+									<div>
+										<h2 id="supplierCount">24</h2>
+										<p>Partners</p>
+									</div>
+								</div>
+								<div>
+									<span class="label">
+										+2<span> new this month</span>
+									</span>
+								</div>
+							</div>
+							<div class="card-trending-sign">
+								<i class='bx bx-trending-up bx-breathe'></i>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="lowStockAlerts">
+					<h3 style="margin-top: 30px; margin-bottom: 15px;">Low Stock Alerts</h3>
+					<div id="alertsList"></div>
+				</div>
 			</div>
-			<div class="data">
-				<div class="content-data">
-					<div class="head">
-						<h3>Sales Report</h3>
-						<div class="menu">
-							<i class='bx bx-dots-horizontal-rounded icon'></i>
-							<ul class="menu-link">
-								<li><a href="#">Edit</a></li>
-								<li><a href="#">Save</a></li>
-								<li><a href="#">Remove</a></li>
-							</ul>
-						</div>
+
+			<!-- PRODUCTS PAGE -->
+			<div id="products" class="page-content">
+				<h1 class="title">Product Inventory</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#" onclick="showPage('dashboard')">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Products</a></li>
+				</ul>
+
+				<div class="data-table">
+					<div class="table-header">
+						<h3>All Products</h3>
+						<button class="btn btn-primary" onclick="showPage('add-product')">
+							<i class='bx bx-plus'></i> Add Product
+						</button>
 					</div>
-					<div class="chart">
-						<div id="chart"></div>
-					</div>
+					<table id="productsTable">
+						<thead>
+							<tr>
+								<th>Product ID</th>
+								<th>Product Name</th>
+								<th>Category</th>
+								<th>Price</th>
+								<th>Quantity</th>
+								<th>Status</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody id="productsTableBody">
+						</tbody>
+					</table>
 				</div>
-				<div class="content-data">
-					<div class="head">
-						<h3>Customer Service</h3>
-						<div class="menu">
-							<i class='bx bx-dots-horizontal-rounded icon'></i>
-							<ul class="menu-link">
-								<li><a href="#">Edit</a></li>
-								<li><a href="#">Save</a></li>
-								<li><a href="#">Remove</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="chat-box">
-						<p class="day"><span>Today</span></p>
-						<div class="msg">
-							<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
-							<div class="chat">
-								<div class="profile">
-									<span class="username">Alan</span>
-									<span class="time">18:30</span>
-								</div>
-								<p>Hello</p>
+			</div>
+
+			<!-- ADD PRODUCT PAGE -->
+			<div id="add-product" class="page-content">
+				<h1 class="title">Add New Product</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#" onclick="showPage('dashboard')">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" onclick="showPage('products')">Products</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Add Product</a></li>
+				</ul>
+
+				<div class="form-container">
+					<form id="addProductForm" onsubmit="addProduct(event)">
+						<div class="form-row">
+							<div class="form-group">
+								<label>Product Name</label>
+								<input type="text" name="name" required>
+							</div>
+							<div class="form-group">
+								<label>Category</label>
+								<select name="category" required>
+									<option value="">Select Category</option>
+									<option value="Electronics">Electronics</option>
+									<option value="Accessories">Accessories</option>
+									<option value="Components">Components</option>
+								</select>
 							</div>
 						</div>
-						<div class="msg me">
-							<div class="chat">
-								<div class="profile">
-									<span class="time">18:30</span>
-								</div>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque voluptatum eos quam dolores eligendi exercitationem animi nobis reprehenderit laborum! Nulla.</p>
+						<div class="form-row">
+							<div class="form-group">
+								<label>Price (£)</label>
+								<input type="number" name="price" step="0.01" required>
+							</div>
+							<div class="form-group">
+								<label>Initial Quantity</label>
+								<input type="number" name="quantity" required>
 							</div>
 						</div>
-						<div class="msg me">
-							<div class="chat">
-								<div class="profile">
-									<span class="time">18:30</span>
-								</div>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, architecto!</p>
+						<div class="form-row">
+							<div class="form-group">
+								<label>Reorder Level</label>
+								<input type="number" name="reorderLevel" required>
+							</div>
+							<div class="form-group">
+								<label>Supplier</label>
+								<select name="supplier" required>
+									<option value="">Select Supplier</option>
+									<option value="TechSupply Ltd">TechSupply Ltd</option>
+									<option value="ElectroWorld">ElectroWorld</option>
+									<option value="ComponentCorp">ComponentCorp</option>
+								</select>
 							</div>
 						</div>
-						<div class="msg me">
-							<div class="chat">
-								<div class="profile">
-									<span class="time">18:30</span>
-								</div>
-								<p>Lorem ipsum, dolor sit amet.</p>
-							</div>
-						</div>
-					</div>
-					<form action="#">
-						<div class="form-group">
-							<input type="text" placeholder="Type...">
-							<button type="submit" class="btn-send"><i class='bx bxs-send' ></i></button>
-						</div>
+						<button type="submit" class="btn btn-primary">Add Product</button>
+						<button type="button" class="btn" onclick="showPage('products')" style="margin-left: 10px; background: var(--grey);">Cancel</button>
 					</form>
 				</div>
 			</div>
-		</main>
-		<!-- MAIN -->
-	</section>
-	<!-- NAVBAR -->
 
-	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-	<script src="script.js"></script>
+			<!-- LOW STOCK PAGE -->
+			<div id="low-stock" class="page-content">
+				<h1 class="title">Low Stock Alerts</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#" onclick="showPage('dashboard')">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" onclick="showPage('products')">Products</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Low Stock Alerts</a></li>
+				</ul>
+
+				<div class="data-table">
+					<div class="table-header">
+						<h3>Items Requiring Reorder</h3>
+						<button class="btn btn-success" onclick="reorderSelected()">
+							<i class='bx bx-refresh'></i> Reorder Selected
+						</button>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"></th>
+								<th>Product Name</th>
+								<th>Current Stock</th>
+								<th>Reorder Level</th>
+								<th>Supplier</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody id="lowStockTableBody">
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- SUPPLIERS PAGE -->
+			<div id="suppliers" class="page-content">
+				<h1 class="title">Suppliers</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#" onclick="showPage('dashboard')">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Suppliers</a></li>
+				</ul>
+
+				<div class="data-table">
+					<div class="table-header">
+						<h3>All Suppliers</h3>
+						<button class="btn btn-primary" onclick="showPage('add-supplier')">
+							<i class='bx bx-plus'></i> Add Supplier
+						</button>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>Supplier ID</th>
+								<th>Company Name</th>
+								<th>Contact Person</th>
+								<th>Email</th>
+								<th>Phone</th>
+								<th>Products Supplied</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody id="suppliersTableBody">
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- ADD SUPPLIER PAGE -->
+			<div id="add-supplier" class="page-content">
+				<h1 class="title">Add New Supplier</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#" onclick="showPage('dashboard')">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" onclick="showPage('suppliers')">Suppliers</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Add Supplier</a></li>
+				</ul>
+
+				<div class="form-container">
+					<form id="addSupplierForm" onsubmit="addSupplier(event)">
+						<div class="form-row">
+							<div class="form-group">
+								<label>Company Name</label>
+								<input type="text" name="companyName" required>
+							</div>
+							<div class="form-group">
+								<label>Contact Person</label>
+								<input type="text" name="contactPerson" required>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group">
+								<label>Email</label>
+								<input type="email" name="email" required>
+							</div>
+							<div class="form-group">
+								<label>Phone</label>
+								<input type="tel" name="phone" required>
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group">
+								<label>Address</label>
+								<input type="text" name="address" required>
+							</div>
+							<div class="form-group">
+								<label>Product Categories</label>
+								<select name="categories" required>
+									<option value="">Select Category</option>
+									<option value="Electronics">Electronics</option>
+									<option value="Accessories">Accessories</option>
+									<option value="Components">Components</option>
+								</select>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary">Add Supplier</button>
+						<button type="button" class="btn" onclick="showPage('suppliers')" style="margin-left: 10px; background: var(--grey);">Cancel</button>
+					</form>
+				</div>
+			</div>
+
+			<!-- SALES ORDERS PAGE -->
+			<div id="sales-orders" class="page-content">
+				<h1 class="title">Sales Orders</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#" onclick="showPage('dashboard')">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Sales Orders</a></li>
+				</ul>
+
+				<div class="data-table">
+					<div class="table-header">
+						<h3>Recent Sales Orders</h3>
+						<button class="btn btn-primary" onclick="createNewOrder()">
+							<i class='bx bx-plus'></i> New Order
+						</button>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>Order ID</th>
+								<th>Customer</th>
+								<th>Date</th>
+								<th>Total Amount</th>
+								<th>Status</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody id="salesOrdersTableBody">
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- CUSTOMERS PAGE -->
+			<div id="customers" class="page-content">
+				<h1 class="title">Customers</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#" onclick="showPage('dashboard')">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Customers</a></li>
+				</ul>
+
+				<div class="data-table">
+					<div class="table-header">
+						<h3>Customer Database</h3>
+						<button class="btn btn-primary" onclick="addCustomer()">
+							<i class='bx bx-plus'></i> Add Customer
+						</button>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>Customer ID</th>
+								<th>Name</th>
+								<th>Email</th>
+								<th>Phone</th>
+								<th>Total Orders</th>
+								<th>Last Order</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody id="customersTableBody">
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<!-- REPORTS PAGE -->
+			<div id="reports" class="page-content">
+				<h1 class="title">Reports & Analytics</h1>
+				<ul class="breadcrumbs">
+					<li><a href="#" onclick="showPage('dashboard')">Home</a></li>
+					<li class="divider">/</li>
+					<li><a href="#" class="active">Reports</a></li>
+				</ul>
+
+				<div class="info-data">
+					<div class="card-data">
+						<div class="head">
+							<h3>Inventory Report</h3>
+						</div>
+						<div class="body">
+							<div>
+								<div class="content">
+									<div class="icon-bg icon-bg-up">
+										<i class='bx bx-bar-chart'></i>
+									</div>
+									<div>
+										<h2>£<span id="inventoryValue">45,230</span></h2>
+										<p>Total Inventory Value</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="card-data">
+						<div class="head">
+							<h3>Top Selling Products</h3>
+						</div>
+						<div class="body">
+							<div id="topProducts">
+								<p>1. iPhone 15 Pro - 45 units sold</p>
+								<p>2. Samsung Galaxy S24 - 32 units sold</p>
+								<p>3. MacBook Air M3 - 28 units sold</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-container" style="margin-top: 20px;">
+					<h3>Generate Custom Report</h3>
+					<div class="form-row">
+						<div class="form-group">
+							<label>Report Type</label>
+							<select id="reportType">
+								<option value="inventory">Inventory Summary</option>
+								<option value="sales">Sales Report</option>
+								<option value="lowstock">Low Stock Report</option>
+								<option value="supplier">Supplier Performance</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Date Range</label>
+							<select id="dateRange">
+								<option value="week">This Week</option>
+								<option value="month">This Month</option>
+								<option value="quarter">This Quarter</option>
+								<option value="year">This Year</option>
+							</select>
+						</div>
+					</div>
+					<button class="btn btn-primary" onclick="generateReport()">Generate Report</button>
+				</div>
+			</div>
+		</main>
+	</section>
+
+	<script>
+		// Data Storage
+		let products = [
+			{id: 'P001', name: 'iPhone 15 Pro', category: 'Electronics', price: 999.99, quantity: 15, reorderLevel: 10, supplier: 'TechSupply Ltd'},
+			{id: 'P002', name: 'Samsung Galaxy S24', category: 'Electronics', price: 899.99, quantity: 8, reorderLevel: 12, supplier: 'ElectroWorld'},
+			{id: 'P003', name: 'MacBook Air M3', category: 'Electronics', price: 1299.99, quantity: 5, reorderLevel: 8, supplier: 'TechSupply Ltd'},
+			{id: 'P004', name: 'AirPods Pro 2', category: 'Accessories', price: 249.99, quantity: 25, reorderLevel: 15, supplier: 'TechSupply Ltd'},
+			{id: 'P005', name: 'USB-C Cable', category: 'Accessories', price: 19.99, quantity: 3, reorderLevel: 20, supplier: 'ComponentCorp'},
+			{id: 'P006', name: 'Wireless Charger', category: 'Accessories', price: 39.99, quantity: 12, reorderLevel: 10, supplier: 'ElectroWorld'}
+		];
+
+		let suppliers = [
+			{id: 'S001', companyName: 'TechSupply Ltd', contactPerson: 'John Smith', email: 'john@techsupply.com', phone: '+44 20 1234 5678', address: 'London, UK', categories: 'Electronics'},
+			{id: 'S002', companyName: 'ElectroWorld', contactPerson: 'Sarah Johnson', email: 'sarah@electroworld.com', phone: '+44 161 987 6543', address: 'Manchester, UK', categories: 'Electronics'},
+			{id: 'S003', companyName: 'ComponentCorp', contactPerson: 'Mike Wilson', email: 'mike@componentcorp.com', phone: '+44 121 456 7890', address: 'Birmingham, UK', categories: 'Components'}
+		];
+
+		let salesOrders = [
+			{id: 'SO001', customer: 'Alice Cooper', date: '2024-09-01', total: 1299.99, status: 'Completed'},
+			{id: 'SO002', customer: 'Bob Wilson', date: '2024-09-02', total: 899.99, status: 'Processing'},
+			{id: 'SO003', customer: 'Carol Davis', date: '2024-09-03', total: 249.99, status: 'Shipped'}
+		];
+
+		let customers = [
+			{id: 'C001', name: 'Alice Cooper', email: 'alice@email.com', phone: '+44 20 1111 2222', totalOrders: 5, lastOrder: '2024-09-01'},
+			{id: 'C002', name: 'Bob Wilson', email: 'bob@email.com', phone: '+44 20 3333 4444', totalOrders: 3, lastOrder: '2024-09-02'},
+			{id: 'C003', name: 'Carol Davis', email: 'carol@email.com', phone: '+44 20 5555 6666', totalOrders: 8, lastOrder: '2024-09-03'}
+		];
+
+		// Navigation Functions
+		function showPage(pageId) {
+			// Hide all pages
+			const pages = document.querySelectorAll('.page-content');
+			pages.forEach(page => page.classList.remove('active'));
+			
+			// Show selected page
+			document.getElementById(pageId).classList.add('active');
+			
+			// Update sidebar active state
+			const menuItems = document.querySelectorAll('#sidebar .side-menu a');
+			menuItems.forEach(item => item.classList.remove('active'));
+			
+			// Load page data
+			switch(pageId) {
+				case 'dashboard':
+					loadDashboard();
+					break;
+				case 'products':
+					loadProducts();
+					break;
+				case 'low-stock':
+					loadLowStock();
+					break;
+				case 'suppliers':
+					loadSuppliers();
+					break;
+				case 'sales-orders':
+					loadSalesOrders();
+					break;
+				case 'customers':
+					loadCustomers();
+					break;
+				case 'reports':
+					loadReports();
+					break;
+			}
+		}
+
+		function toggleDropdown(element) {
+			const dropdown = element.nextElementSibling;
+			const isOpen = dropdown.classList.contains('show');
+			
+			// Close all dropdowns
+			document.querySelectorAll('.side-dropdown').forEach(dd => dd.classList.remove('show'));
+			document.querySelectorAll('#sidebar .side-menu > li > a').forEach(a => a.classList.remove('active'));
+			
+			// Toggle current dropdown
+			if (!isOpen) {
+				dropdown.classList.add('show');
+				element.classList.add('active');
+			}
+		}
+
+		function toggleSidebar() {
+			document.getElementById('sidebar').classList.toggle('hide');
+		}
+
+		// Dashboard Functions
+		function loadDashboard() {
+			updateDashboardStats();
+			loadLowStockAlerts();
+		}
+
+		function updateDashboardStats() {
+			document.getElementById('totalProducts').textContent = products.length;
+			const lowStockItems = products.filter(p => p.quantity <= p.reorderLevel);
+			document.getElementById('lowStockCount').textContent = lowStockItems.length;
+			document.getElementById('alertCount').textContent = lowStockItems.length;
+			
+			// Calculate total inventory value
+			const totalValue = products.reduce((sum, product) => sum + (product.price * product.quantity), 0);
+			document.getElementById('inventoryValue').textContent = totalValue.toLocaleString();
+		}
+
+		function loadLowStockAlerts() {
+			const lowStockItems = products.filter(p => p.quantity <= p.reorderLevel);
+			const alertsList = document.getElementById('alertsList');
+			
+			if (lowStockItems.length === 0) {
+				alertsList.innerHTML = '<div class="stock-alert" style="background: var(--light-green); color: var(--green);">All products are well-stocked!</div>';
+				return;
+			}
+			
+			alertsList.innerHTML = lowStockItems.map(item => 
+				`<div class="stock-alert">
+					<strong>${item.name}</strong> is running low! 
+					Current stock: ${item.quantity}, Reorder level: ${item.reorderLevel}
+					<button class="btn btn-primary" style="margin-left: 10px; padding: 5px 10px;" onclick="reorderProduct('${item.id}')">
+						Reorder Now
+					</button>
+				</div>`
+			).join('');
+		}
+
+		// Product Functions
+		function loadProducts() {
+			const tbody = document.getElementById('productsTableBody');
+			tbody.innerHTML = products.map(product => {
+				const status = product.quantity <= product.reorderLevel ? 
+					'<span class="low-stock">Low Stock</span>' : 
+					'<span class="in-stock">In Stock</span>';
+				
+				return `<tr>
+					<td>${product.id}</td>
+					<td>${product.name}</td>
+					<td>${product.category}</td>
+					<td>£${product.price.toFixed(2)}</td>
+					<td>${product.quantity}</td>
+					<td>${status}</td>
+					<td>
+						<button class="btn btn-primary" onclick="editProduct('${product.id}')" style="padding: 5px 10px; margin-right: 5px;">Edit</button>
+						<button class="btn btn-danger" onclick="deleteProduct('${product.id}')" style="padding: 5px 10px;">Delete</button>
+					</td>
+				</tr>`;
+			}).join('');
+		}
+
+		function addProduct(event) {
+			event.preventDefault();
+			const formData = new FormData(event.target);
+			const newProduct = {
+				id: 'P' + String(products.length + 1).padStart(3, '0'),
+				name: formData.get('name'),
+				category: formData.get('category'),
+				price: parseFloat(formData.get('price')),
+				quantity: parseInt(formData.get('quantity')),
+				reorderLevel: parseInt(formData.get('reorderLevel')),
+				supplier: formData.get('supplier')
+			};
+			
+			products.push(newProduct);
+			alert('Product added successfully!');
+			showPage('products');
+		}
+
+		function deleteProduct(id) {
+			if (confirm('Are you sure you want to delete this product?')) {
+				products = products.filter(p => p.id !== id);
+				loadProducts();
+				updateDashboardStats();
+			}
+		}
+
+		function editProduct(id) {
+			const product = products.find(p => p.id === id);
+			if (product) {
+				const newQuantity = prompt(`Update quantity for ${product.name}:`, product.quantity);
+				if (newQuantity && !isNaN(newQuantity)) {
+					product.quantity = parseInt(newQuantity);
+					loadProducts();
+					updateDashboardStats();
+				}
+			}
+		}
+
+		// Low Stock Functions
+		function loadLowStock() {
+			const lowStockItems = products.filter(p => p.quantity <= p.reorderLevel);
+			const tbody = document.getElementById('lowStockTableBody');
+			
+			tbody.innerHTML = lowStockItems.map(product => 
+				`<tr>
+					<td><input type="checkbox" value="${product.id}"></td>
+					<td>${product.name}</td>
+					<td class="low-stock">${product.quantity}</td>
+					<td>${product.reorderLevel}</td>
+					<td>${product.supplier}</td>
+					<td>
+						<button class="btn btn-success" onclick="reorderProduct('${product.id}')" style="padding: 5px 10px;">
+							<i class='bx bx-refresh'></i> Reorder
+						</button>
+					</td>
+				</tr>`
+			).join('');
+		}
+
+		function reorderProduct(id) {
+			const product = products.find(p => p.id === id);
+			if (product) {
+				const reorderQty = prompt(`Reorder quantity for ${product.name}:`, product.reorderLevel * 2);
+				if (reorderQty && !isNaN(reorderQty)) {
+					product.quantity += parseInt(reorderQty);
+					alert(`Reorder placed for ${reorderQty} units of ${product.name}`);
+					loadLowStock();
+					updateDashboardStats();
+				}
+			}
+		}
+
+		function toggleSelectAll() {
+			const checkboxes = document.querySelectorAll('#lowStockTableBody input[type="checkbox"]');
+			const selectAll = document.getElementById('selectAll');
+			checkboxes.forEach(cb => cb.checked = selectAll.checked);
+		}
+
+		function reorderSelected() {
+			const selected = Array.from(document.querySelectorAll('#lowStockTableBody input[type="checkbox"]:checked'))
+				.map(cb => cb.value);
+			
+			if (selected.length === 0) {
+				alert('Please select products to reorder');
+				return;
+			}
+			
+			selected.forEach(id => {
+				const product = products.find(p => p.id === id);
+				if (product) {
+					product.quantity += product.reorderLevel * 2;
+				}
+			});
+			
+			alert(`Reorder placed for ${selected.length} products`);
+			loadLowStock();
+			updateDashboardStats();
+		}
+
+		// Supplier Functions
+		function loadSuppliers() {
+			const tbody = document.getElementById('suppliersTableBody');
+			tbody.innerHTML = suppliers.map(supplier => {
+				const productCount = products.filter(p => p.supplier === supplier.companyName).length;
+				return `<tr>
+					<td>${supplier.id}</td>
+					<td>${supplier.companyName}</td>
+					<td>${supplier.contactPerson}</td>
+					<td>${supplier.email}</td>
+					<td>${supplier.phone}</td>
+					<td>${productCount} products</td>
+					<td>
+						<button class="btn btn-primary" onclick="editSupplier('${supplier.id}')" style="padding: 5px 10px; margin-right: 5px;">Edit</button>
+						<button class="btn btn-danger" onclick="deleteSupplier('${supplier.id}')" style="padding: 5px 10px;">Delete</button>
+					</td>
+				</tr>`;
+			}).join('');
+		}
+
+		function addSupplier(event) {
+			event.preventDefault();
+			const formData = new FormData(event.target);
+			const newSupplier = {
+				id: 'S' + String(suppliers.length + 1).padStart(3, '0'),
+				companyName: formData.get('companyName'),
+				contactPerson: formData.get('contactPerson'),
+				email: formData.get('email'),
+				phone: formData.get('phone'),
+				address: formData.get('address'),
+				categories: formData.get('categories')
+			};
+			
+			suppliers.push(newSupplier);
+			alert('Supplier added successfully!');
+			showPage('suppliers');
+		}
+
+		function deleteSupplier(id) {
+			if (confirm('Are you sure you want to delete this supplier?')) {
+				suppliers = suppliers.filter(s => s.id !== id);
+				loadSuppliers();
+			}
+		}
+
+		// Sales Functions
+		function loadSalesOrders() {
+			const tbody = document.getElementById('salesOrdersTableBody');
+			tbody.innerHTML = salesOrders.map(order => 
+				`<tr>
+					<td>${order.id}</td>
+					<td>${order.customer}</td>
+					<td>${order.date}</td>
+					<td>£${order.total.toFixed(2)}</td>
+					<td><span class="${order.status.toLowerCase()}">${order.status}</span></td>
+					<td>
+						<button class="btn btn-primary" onclick="viewOrder('${order.id}')" style="padding: 5px 10px;">View</button>
+					</td>
+				</tr>`
+			).join('');
+		}
+
+		function loadCustomers() {
+			const tbody = document.getElementById('customersTableBody');
+			tbody.innerHTML = customers.map(customer => 
+				`<tr>
+					<td>${customer.id}</td>
+					<td>${customer.name}</td>
+					<td>${customer.email}</td>
+					<td>${customer.phone}</td>
+					<td>${customer.totalOrders}</td>
+					<td>${customer.lastOrder}</td>
+					<td>
+						<button class="btn btn-primary" onclick="viewCustomer('${customer.id}')" style="padding: 5px 10px;">View</button>
+					</td>
+				</tr>`
+			).join('');
+		}
+
+		// Search Function
+		function searchProducts(event) {
+			event.preventDefault();
+			const query = document.getElementById('searchInput').value.toLowerCase();
+			const filteredProducts = products.filter(p => 
+				p.name.toLowerCase().includes(query) || 
+				p.category.toLowerCase().includes(query)
+			);
+			
+			if (query.trim() !== '') {
+				showPage('products');
+				// Update table with filtered results
+				const tbody = document.getElementById('productsTableBody');
+				tbody.innerHTML = filteredProducts.map(product => {
+					const status = product.quantity <= product.reorderLevel ? 
+						'<span class="low-stock">Low Stock</span>' : 
+						'<span class="in-stock">In Stock</span>';
+					
+					return `<tr style="background: #fffacd;">
+						<td>${product.id}</td>
+						<td>${product.name}</td>
+						<td>${product.category}</td>
+						<td>£${product.price.toFixed(2)}</td>
+						<td>${product.quantity}</td>
+						<td>${status}</td>
+						<td>
+							<button class="btn btn-primary" onclick="editProduct('${product.id}')" style="padding: 5px 10px; margin-right: 5px;">Edit</button>
+							<button class="btn btn-danger" onclick="deleteProduct('${product.id}')" style="padding: 5px 10px;">Delete</button>
+						</td>
+					</tr>`;
+				}).join('');
+			}
+		}
+
+		// Utility Functions
+		function createNewOrder() {
+			alert('New order creation feature - integrate with POS system');
+		}
+
+		function addCustomer() {
+			alert('Add customer feature - implement customer registration form');
+		}
+
+		function viewOrder(id) {
+			alert(`Viewing order details for ${id}`);
+		}
+
+		function viewCustomer(id) {
+			alert(`Viewing customer details for ${id}`);
+		}
+
+		function editSupplier(id) {
+			alert(`Editing supplier ${id} - implement edit form`);
+		}
+
+		function generateReport() {
+			const type = document.getElementById('reportType').value;
+			const range = document.getElementById('dateRange').value;
+			alert(`Generating ${type} report for ${range}`);
+		}
+
+		// Initialize on page load
+		document.addEventListener('DOMContentLoaded', function() {
+			loadDashboard();
+			
+			// Setup profile dropdown
+			const profileImg = document.querySelector('.profile img');
+			const profileDropdown = document.querySelector('.profile-link');
+			
+			profileImg.addEventListener('click', () => {
+				profileDropdown.classList.toggle('show');
+			});
+			
+			// Close dropdown when clicking outside
+			document.addEventListener('click', (e) => {
+				if (!e.target.closest('.profile')) {
+					profileDropdown.classList.remove('show');
+				}
+			});
+		});
+
+		// Simulated real-time updates
+		setInterval(() => {
+			// Simulate stock changes
+			if (Math.random() > 0.95) {
+				const randomProduct = products[Math.floor(Math.random() * products.length)];
+				randomProduct.quantity = Math.max(0, randomProduct.quantity - Math.floor(Math.random() * 3));
+				updateDashboardStats();
+				loadLowStockAlerts();
+			}
+		}, 10000);
+	</script>
 </body>
 </html>
